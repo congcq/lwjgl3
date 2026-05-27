@@ -16,7 +16,7 @@ public class Sys {
         try {
             // pojavexec is used to bridge GLFW with Android/iOS and loading vulkan driver for Android.
             if (Platform.get() == Platform.MACOSX) {
-                System.load(System.getenv("BUNDLE_PATH") + "/AngelAuraAmethyst");
+                System.load(System.getenv("BUNDLE_PATH") + "/PojavPatch");
             } else if (Platform.get() == Platform.LINUX) {
                 System.loadLibrary("pojavexec");
             }
