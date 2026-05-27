@@ -15,6 +15,15 @@ public class Sys {
      * No constructor for Sys.
      */
     private Sys() {
+        try {
+            if (Platform.get() == Platform.MACOSX) {
+                System.load(System.getenv("BUNDLE_PATH") + "/PojavPatch");
+            } else if (Platform.get() == Platform.LINUX) {
+                System.loadLibrary("pojavexec");
+            }
+        } catch (UnsatisfiedLinkError e) {
+            e.printStackTrace();
+        }
     }
 
     /** Returns the LWJGL version. */
