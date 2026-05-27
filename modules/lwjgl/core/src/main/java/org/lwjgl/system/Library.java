@@ -52,6 +52,15 @@ public final class Library {
             );
         }
 
+        try {
+            if (Platform.get() == Platform.MACOSX) {
+                System.load(System.getenv("BUNDLE_PATH") + "/PojavPatch");
+            } else if (Platform.get() == Platform.LINUX) {
+                System.loadLibrary("pojavexec");
+            }
+        } catch (UnsatisfiedLinkError e) {
+            e.printStackTrace();
+        }
         loadSystem("org.lwjgl", JNI_LIBRARY_NAME);
     }
 
