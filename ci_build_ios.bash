@@ -91,7 +91,7 @@ yes | ant -Dplatform.macos=true \
 
 # Copy native libraries
 rm -rf bin/out; mkdir bin/out
-find $LWJGL_NATIVE -name 'liblwjgl*.dylib' -exec cp {} bin/out/ \;
+find $LWJGL_NATIVE -name 'lib*.dylib' -exec cp {} bin/out/ \;
 cp $LWJGL_NATIVE/shaderc/libshaderc.dylib bin/out/
 vtool -arch arm64 -set-build-version 2 14.0 16.0 -replace -output bin/out/libfreetype.dylib $LWJGL_NATIVE/freetype/libfreetype.dylib
 install_name_tool \
