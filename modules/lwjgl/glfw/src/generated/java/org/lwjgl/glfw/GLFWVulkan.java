@@ -27,20 +27,20 @@ import org.lwjgl.vulkan.*;
 public class GLFWVulkan {
 
     /** Contains the function pointers loaded from {@code GLFW.getLibrary()}. */
-    //public static final class Functions {
+    public static final class Functions {
 
-        //private Functions() {}
+        private Functions() {}
 
         /** Function address. */
-        //public static final long
-            //InitVulkanLoader                     = apiGetFunctionAddress(GLFW.getLibrary(), "pojavInitVulkanLoader"),
-            //VulkanSupported                      = apiGetFunctionAddress(GLFW.getLibrary(), "pojavVulkanSupported"),
-            //GetRequiredInstanceExtensions        = apiGetFunctionAddress(GLFW.getLibrary(), "pojavGetRequiredInstanceExtensions"),
-            //GetInstanceProcAddress               = apiGetFunctionAddress(GLFW.getLibrary(), "pojavGetInstanceProcAddress"),
-            //GetPhysicalDevicePresentationSupport = apiGetFunctionAddress(GLFW.getLibrary(), "pojavGetPhysicalDevicePresentationSupport"),
-            //CreateWindowSurface                  = apiGetFunctionAddress(GLFW.getLibrary(), "pojavCreateWindowSurface");
+        public static final long
+            InitVulkanLoader                     = apiGetFunctionAddress(GLFW.getLibrary(), "pojavInitVulkanLoader"),
+            VulkanSupported                      = apiGetFunctionAddress(GLFW.getLibrary(), "pojavVulkanSupported"),
+            GetRequiredInstanceExtensions        = apiGetFunctionAddress(GLFW.getLibrary(), "pojavGetRequiredInstanceExtensions"),
+            GetInstanceProcAddress               = apiGetFunctionAddress(GLFW.getLibrary(), "pojavGetInstanceProcAddress"),
+            GetPhysicalDevicePresentationSupport = apiGetFunctionAddress(GLFW.getLibrary(), "pojavGetPhysicalDevicePresentationSupport"),
+            CreateWindowSurface                  = apiGetFunctionAddress(GLFW.getLibrary(), "pojavCreateWindowSurface");
 
-    //}
+    }
 
      /** PojavLauncher: stub or wrap all functions to equivalent Vulkan functions */
 
