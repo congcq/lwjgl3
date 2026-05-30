@@ -91,40 +91,40 @@ public final class GL {
     /** Loads the OpenGL native library, using the default library name. */
     public static void create() {
         SharedLibrary GL;
-        switch (Platform.get()) {
-            case LINUX:
-                GL = Library.loadNative(GL.class, "org.lwjgl.opengl", Configuration.OPENGL_LIBRARY_NAME, "libGLX.so.0", "libGL.so.1", "libGL.so");
-                break;
-            case MACOSX:
+        //switch (Platform.get()) {
+        //    case LINUX:
+        //        GL = Library.loadNative(GL.class, "org.lwjgl.opengl", Configuration.OPENGL_LIBRARY_NAME, "libGLX.so.0", "libGL.so.1", "libGL.so");
+        //        break;
+        //    case MACOSX:
                 // Configuration does not get updated if the value changes, so we have to update it here
-                Configuration.OPENGL_LIBRARY_NAME.set(System.getProperty("org.lwjgl.opengl.libname"));
-                String override = Configuration.OPENGL_LIBRARY_NAME.get();
-                GL = override != null
-                    ? Library.loadNative(GL.class, "org.lwjgl.opengl", override)
-                    : MacOSXLibrary.getWithIdentifier("com.apple.opengl");
-                break;
-            case WINDOWS:
-                GL = Library.loadNative(GL.class, "org.lwjgl.opengl", Configuration.OPENGL_LIBRARY_NAME, "opengl32");
-                break;
-            default:
-                throw new IllegalStateException();
-        }
+        //        Configuration.OPENGL_LIBRARY_NAME.set(System.getProperty("org.lwjgl.opengl.libname"));
+        //        String override = Configuration.OPENGL_LIBRARY_NAME.get();
+        //        GL = override != null
+        //            ? Library.loadNative(GL.class, "org.lwjgl.opengl", override)
+        //            : MacOSXLibrary.getWithIdentifier("com.apple.opengl");
+        //        break;
+        //    case WINDOWS:
+        //        GL = Library.loadNative(GL.class, "org.lwjgl.opengl", Configuration.OPENGL_LIBRARY_NAME, "opengl32");
+        //        break;
+        //    default:
+        //        throw new IllegalStateException();
+        //}
 
-        // if (GL == null) {
-        //     GL = loadNative();
-        //     if (GL == null && !"native".equals(contextAPI)) {
-        //         if (!tryEGL) {
-        //             GL = loadEGL();
-        //         }
-        //         if (GL == null && !"OSMesa".equals(contextAPI)) {
-        //             GL = loadOSMesa();
-        //         }
-        //     }
-        // }
-        //
-        // if (GL == null) {
-        //     throw new IllegalStateException("There is no OpenGL context management API available.");
-        // }
+        if (GL == null) {
+            GL = loadNative();
+            if (GL == null && !"native".equals(contextAPI)) {
+                if (!tryEGL) {
+                    GL = loadEGL();
+                }
+                if (GL == null && !"OSMesa".equals(contextAPI)) {
+                    GL = loadOSMesa();
+                }
+            }
+        }
+        
+        if (GL == null) {
+            throw new IllegalStateException("There is no OpenGL context management API available.");
+        }
 
         create(GL);
     }
@@ -142,6 +142,14 @@ public final class GL {
     }
 
     private static @Nullable SharedLibrary loadNative() {
+        if (Platform.get() == Platform.MACOSX) {
+            try {
+                Configuration.OPENGL_LIBRARY_NAME.set(System.getProperty("org.lwjgl.opengl.libname"));
+                String override = Configuration.OPENGL_LIBRARY_NAME.get();
+                return override != null ? Library.loadNative(GL.class, "org.lwjgl.opengl", override) : MacOSXLibrary.getWithIdentifier("com.apple.opengl");
+            } catch (Throwable e) {
+            }
+        }
         try {
             return Library.loadNative(GL.class, "org.lwjgl.opengl", Configuration.OPENGL_LIBRARY_NAME, Configuration.OPENGL_LIBRARY_NAME_DEFAULTS());
         } catch (Throwable ignored) {
