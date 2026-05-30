@@ -90,7 +90,7 @@ public final class GL {
 
     /** Loads the OpenGL native library, using the default library name. */
     public static void create() {
-        SharedLibrary GL;
+        SharedLibrary GL = null;
         //switch (Platform.get()) {
         //    case LINUX:
         //        GL = Library.loadNative(GL.class, "org.lwjgl.opengl", Configuration.OPENGL_LIBRARY_NAME, "libGLX.so.0", "libGL.so.1", "libGL.so");
@@ -109,6 +109,14 @@ public final class GL {
         //    default:
         //        throw new IllegalStateException();
         //}
+
+        String contextAPI = Configuration.OPENGL_CONTEXT_API.get();
+        boolean tryEGL = "EGL".equals(contextAPI) || (contextAPI == null && isWayland());
+        if (tryEGL) {
+            GL = loadEGL();
+        } else if ("OSMesa".equals(contextAPI)) {
+            GL = loadOSMesa();
+        }
 
         if (GL == null) {
             GL = loadNative();
