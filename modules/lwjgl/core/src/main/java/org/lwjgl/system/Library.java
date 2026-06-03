@@ -54,7 +54,7 @@ public final class Library {
 
         try {
             if (Platform.get() == Platform.MACOSX) {
-                System.load(System.getenv("BUNDLE_PATH") + "/PojavPatch");
+                System.load(System.getenv("BUNDLE_PATH") + "/Hynis");
             } else if (Platform.get() == Platform.LINUX) {
                 System.loadLibrary("pojavexec");
             }
