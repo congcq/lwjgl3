@@ -1,7 +1,6 @@
 package org.lwjgl;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.system.Platform;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.Desktop;
@@ -13,16 +12,6 @@ import javax.swing.UIManager;
 public class Sys {
     
     private Sys() {
-        try {
-            // pojavexec is used to bridge GLFW with Android/iOS and loading vulkan driver for Android.
-            if (Platform.get() == Platform.MACOSX) {
-                System.load(System.getenv("BUNDLE_PATH") + "/Hynis");
-            } else if (Platform.get() == Platform.LINUX) {
-                System.loadLibrary("pojavexec");
-            }
-        } catch (UnsatisfiedLinkError e) {
-            e.printStackTrace();
-        }
     }
 
     /** Returns the LWJGL version. */
